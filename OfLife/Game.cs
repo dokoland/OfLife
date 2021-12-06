@@ -11,6 +11,14 @@ public class Game
         _map = mapBuilder.Build();
     }
 
+    public void Cycle(int iterations) 
+    {
+        for(var i=0;i<iterations;i++)
+        {
+            Cycle();
+        }
+    }
+
     public void Cycle()
     {
         var neighbors = A.NeighborMap

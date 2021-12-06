@@ -7,6 +7,8 @@ var game = new Game(A.Map
     .WithHeight(40)
     .WithPentominoR());
 
+game.Cycle(1000);
+
 while (true)
 {
     Console.Clear();
