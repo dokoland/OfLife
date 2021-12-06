@@ -21,10 +21,6 @@
                 // Less than 2 neighbors or no neighbors at all
                 if (!neighbors.ContainsKey(cell) || neighbors[cell] > 3 || neighbors[cell] < 2)
                 {
-                    //Console.SetCursorPosition(cell.Item1, cell.Item2);
-                    //Console.BackgroundColor = ConsoleColor.Black;
-                    //Console.Write(" ");
-
                     _map.Remove(cell);
                 }
             }
@@ -89,30 +85,9 @@
         {
             foreach (var cell in _map.Keys)
             {
-                //Console.BackgroundColor = ConsoleColor.White;
                 Console.SetCursorPosition(cell.Item1, cell.Item2);
                 Console.Write("X");
             }
-        }
-
-        public void DrawAll()
-        {
-            for (var y = 0; y < _mapBuilder.Height; y++)
-            {
-                for (var x = 0; x < _mapBuilder.Width; x++)
-                {
-                    if (_map.ContainsKey((x, y)))
-                    {
-                        Console.Write("X");
-                    }
-                    else
-                    {
-                        Console.Write(".");
-                    }
-                }
-                Console.WriteLine();
-            }
-
         }
     }
 }
