@@ -5,7 +5,7 @@ Console.Clear();
 var game = new Game(A.Map
     .WithWidth(120)
     .WithHeight(40)
-    .WithExplosion());
+    .WithPentominoR());
 
 while (true)
 {

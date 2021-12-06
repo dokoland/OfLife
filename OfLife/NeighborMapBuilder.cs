@@ -32,10 +32,25 @@ public class NeighborMapBuilder
         var y = cell.Item2;
         var yBottom = cell.Item2 + 1;
 
-        xLeft = xLeft < 0 ? 0 : xLeft;
-        xRight = xRight > _mapBuilder!.Width - 1 ? _mapBuilder.Width - 1 : xRight;
-        yTop = yTop < 0 ? 0 : yTop;
-        yBottom = yBottom > _mapBuilder.Height - 1 ? _mapBuilder.Height - 1 : yBottom;
+        var xMax = _mapBuilder!.Width - 1;
+        var yMax = _mapBuilder.Height - 1;
+
+        if (xLeft < 0)
+        {
+            xLeft = xMax;
+        }
+        if (xRight > xMax)
+        {
+            xRight = 0;
+        }
+        if (yTop < 0)
+        {
+            yTop = yMax;
+        }
+        if (yBottom > yMax)
+        {
+            yBottom = 0;
+        }
 
         AddToDictionary(map, (xLeft, yTop), value);
         AddToDictionary(map, (x, yTop), value);
