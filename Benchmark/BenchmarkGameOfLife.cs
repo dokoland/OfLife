@@ -1,8 +1,12 @@
 ﻿namespace Benchmark;
 
 using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Jobs;
 using OfLife;
 
+[SimpleJob(RuntimeMoniker.Net472, baseline: true)]
+[SimpleJob(RuntimeMoniker.Net60)]
+[RPlotExporter]
 public class BenchmarkGameOfLife
 {
     private readonly MapBuilder _mapBuilder = 
@@ -13,9 +17,12 @@ public class BenchmarkGameOfLife
     private Game _pentominoR => new(_mapBuilder.WithPentominoR());
     private Game _spaceship => new(_mapBuilder.WithLeightWeightSpaceship());
 
-    [Benchmark]
-    public void LWSS() => _spaceship.Cycle(1000);
+    [Params(10, 100, 1000)]
+    public int cycles;
 
     [Benchmark]
-    public void PentominoR() => _pentominoR.Cycle(1000);
+    public void LWSS() => _spaceship.Cycle(cycles);
+
+    [Benchmark]
+    public void PentominoR() => _pentominoR.Cycle(cycles);
 }
