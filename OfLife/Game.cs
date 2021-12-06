@@ -34,6 +34,15 @@
             }
         }
 
+        public void Draw()
+        {
+            foreach (var cell in _map.Keys)
+            {
+                Console.SetCursorPosition(cell.Item1, cell.Item2);
+                Console.Write("X");
+            }
+        }
+
         private Dictionary<(int, int), int> CreateNeighborMap((int, int)[] cells)
         {
             var map = new Dictionary<(int, int), int>();
@@ -79,15 +88,6 @@
                 map[key] = 0;
             }
             map[key] += value;
-        }
-
-        public void Draw()
-        {
-            foreach (var cell in _map.Keys)
-            {
-                Console.SetCursorPosition(cell.Item1, cell.Item2);
-                Console.Write("X");
-            }
         }
     }
 }
