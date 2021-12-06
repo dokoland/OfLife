@@ -2,8 +2,8 @@
 {
     public class MapBuilder
     {
-        public int Width { private set; get; }
-        public int Height { private set; get; }
+        public int Width { private set; get; } = 25;
+        public int Height { private set; get; } = 15;
 
         private readonly Dictionary<(int, int), bool> _map = new();
 
