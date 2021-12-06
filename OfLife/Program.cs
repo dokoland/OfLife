@@ -2,23 +2,19 @@
 using OfLife;
 
 Console.Clear();
-var map = new GameMap(140, 40);
-map.InitPentominoR();
+var game = new Game(A.Map
+    .WithWidth(120)
+    .WithHeight(40)
+    .WithPentominoR());
 
-while (1 == 1)
+while (true)
 {
-    
+    Console.Clear();
+    //Console.WriteLine($"{i}. Iteration ");
+    game.Draw();
+    game.Cycle();
 
-    //for (int i = 0; i < 130; i++)
-    {
-        Console.Clear();
-        //Console.WriteLine($"{i}. Iteration ");
-        map.Draw();
-        map.Cycle();
-
-        //Console.ReadLine();
-        Thread.Sleep(100);
-    }
+    Thread.Sleep(100);
 }
 
 

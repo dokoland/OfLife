@@ -1,86 +1,14 @@
 ﻿namespace OfLife
 {
-    public class GameMap
+    public class Game
     {
-        private readonly int _width = 25;
-        private readonly int _height = 15;
+        private readonly Dictionary<(int, int), bool> _map;
+        private readonly MapBuilder _mapBuilder;
 
-        private readonly Dictionary<(int, int), bool> _map = new();
-        private readonly Dictionary<(int, int), int> _neighbors = new();
-
-        public GameMap()
+        public Game(MapBuilder mapBuilder)
         {
-        }
-
-        public GameMap(int width, int height)
-        {
-            _width = width;
-            _height = height;
-        }
-
-        public void Add(int x, int y)
-        {
-            _map[(x, y)] = true;
-        }
-
-        public void InitPentominoR()
-        {
-            Add(_width / 2, _height / 2 - 1);
-            Add(_width / 2, _height / 2);
-            Add(_width / 2, _height / 2 + 1);
-            Add(_width / 2 + -1, _height / 2);
-            Add(_width / 2 + 1, _height / 2 - 1);
-        }
-
-        public void InitLeightWeightSpaceship()
-        {
-            Add(_width / 2 - 2, _height / 2 - 2);
-            Add(_width / 2 - 1, _height / 2 - 2);
-            Add(_width / 2 - 0, _height / 2 - 2);
-            Add(_width / 2 + 1, _height / 2 - 2);
-
-            Add(_width / 2 + 1, _height / 2 - 1);
-            Add(_width / 2 + 1, _height / 2 - 0);
-
-            Add(_width / 2 + 0, _height / 2 + 1);
-            Add(_width / 2 - 3, _height / 2 + 1);
-            Add(_width / 2 - 3, _height / 2 - 1);
-        }
-
-        public void InitExclamationMark()
-        {
-            Add(_width / 2, _height / 2 - 4);
-            Add(_width / 2, _height / 2 - 3);
-            Add(_width / 2, _height / 2 - 2);
-            Add(_width / 2, _height / 2 - 1);
-            Add(_width / 2, _height / 2 + 1);
-            Add(_width / 2, _height / 2 + 2);
-
-            Add(_width / 2 + 1, _height / 2 - 4);
-            Add(_width / 2 + 1, _height / 2 - 3);
-            Add(_width / 2 + 1, _height / 2 - 2);
-            Add(_width / 2 + 1, _height / 2 - 1);
-            Add(_width / 2 + 1, _height / 2 + 1);
-            Add(_width / 2 + 1, _height / 2 + 2);
-        }
-
-        public void InitExplosion()
-        {
-            Add(_width / 2 - 1, _height / 2 - 3);
-            Add(_width / 2 - 1, _height / 2 - 2);
-            Add(_width / 2 - 1, _height / 2 - 1);
-            Add(_width / 2, _height / 2 - 3);
-            Add(_width / 2 + 1, _height / 2 - 3);
-            Add(_width / 2 + 1, _height / 2 - 2);
-            Add(_width / 2 + 1, _height / 2 - 1);
-
-            Add(_width / 2 - 1, _height / 2 + 3);
-            Add(_width / 2 - 1, _height / 2 + 2);
-            Add(_width / 2 - 1, _height / 2 + 1);
-            Add(_width / 2, _height / 2 + 3);
-            Add(_width / 2 + 1, _height / 2 + 3);
-            Add(_width / 2 + 1, _height / 2 + 2);
-            Add(_width / 2 + 1, _height / 2 + 1);
+            _mapBuilder = mapBuilder;
+            _map = mapBuilder.Build();
         }
 
         public void Cycle()
@@ -132,9 +60,9 @@
             var yBottom = cell.Item2 + 1;
 
             xLeft = xLeft < 0 ? 0 : xLeft;
-            xRight = xRight > _width - 1 ? _width - 1 : xRight;
+            xRight = xRight > _mapBuilder.Width - 1 ? _mapBuilder.Width - 1 : xRight;
             yTop = yTop < 0 ? 0 : yTop;
-            yBottom = yBottom > _height - 1 ? _height - 1 : yBottom;
+            yBottom = yBottom > _mapBuilder.Height - 1 ? _mapBuilder.Height - 1 : yBottom;
 
             AddToDictionary(map, (xLeft, yTop), value);
             AddToDictionary(map, (x, yTop), value);
@@ -169,9 +97,9 @@
 
         public void DrawAll()
         {
-            for (var y = 0; y < _height; y++)
+            for (var y = 0; y < _mapBuilder.Height; y++)
             {
-                for (var x = 0; x < _width; x++)
+                for (var x = 0; x < _mapBuilder.Width; x++)
                 {
                     if (_map.ContainsKey((x, y)))
                     {
@@ -186,6 +114,5 @@
             }
 
         }
-
     }
 }
