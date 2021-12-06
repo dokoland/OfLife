@@ -23,7 +23,7 @@
             return this;
         }
 
-        public MapBuilder InitLeightWeightSpaceship()
+        public MapBuilder WithLeightWeightSpaceship()
         {
             Add(HalfWidth - 2, HalfHeight - 2);
             Add(HalfWidth - 1, HalfHeight - 2);
@@ -38,7 +38,7 @@
             return this;
         }
 
-        public MapBuilder InitExclamationMark()
+        public MapBuilder WithExclamationMark()
         {
             Add(HalfWidth, HalfHeight - 4);
             Add(HalfWidth, HalfHeight - 3);
@@ -57,7 +57,7 @@
             return this;
         }
 
-        public MapBuilder InitExplosion()
+        public MapBuilder WithExplosion()
         {
             Add(HalfWidth - 1, HalfHeight - 3);
             Add(HalfWidth - 1, HalfHeight - 2);
