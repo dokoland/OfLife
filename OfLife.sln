@@ -5,7 +5,11 @@ VisualStudioVersion = 17.0.31919.166
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OfLife", "OfLife\OfLife.csproj", "{35742183-19C7-4610-8272-DF3788D1444D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Benchmark", "Benchmark\Benchmark.csproj", "{1C3CA292-10E5-4475-AC0D-E97C1FBBE33A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Benchmark", "Benchmark\Benchmark.csproj", "{1C3CA292-10E5-4475-AC0D-E97C1FBBE33A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OfLifeWeb", "OfLifeWeb\OfLifeWeb.csproj", "{66B1D86F-EA07-4175-A5DD-F28132A5D4A7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OfLifeConsole", "OfLifeConsole\OfLifeConsole.csproj", "{C7531B73-79D6-439D-A820-DB67E79C64CB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +25,14 @@ Global
 		{1C3CA292-10E5-4475-AC0D-E97C1FBBE33A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1C3CA292-10E5-4475-AC0D-E97C1FBBE33A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1C3CA292-10E5-4475-AC0D-E97C1FBBE33A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66B1D86F-EA07-4175-A5DD-F28132A5D4A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66B1D86F-EA07-4175-A5DD-F28132A5D4A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66B1D86F-EA07-4175-A5DD-F28132A5D4A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66B1D86F-EA07-4175-A5DD-F28132A5D4A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C7531B73-79D6-439D-A820-DB67E79C64CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7531B73-79D6-439D-A820-DB67E79C64CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7531B73-79D6-439D-A820-DB67E79C64CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7531B73-79D6-439D-A820-DB67E79C64CB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

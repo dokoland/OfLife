@@ -56,3 +56,5 @@ net6.0
 /OfLife/obj/project.nuget.cache
 v17
 obj
+/.vs/OfLife/DesignTimeBuild
+/.vs/OfLife
