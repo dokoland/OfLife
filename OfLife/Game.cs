@@ -13,20 +13,23 @@ public class Game
         _map = mapBuilder.Build();
     }
 
-    public void Cycle(int iterations) 
+    public void Cycle(int iterations)
     {
-        for(var i=0;i<iterations;i++)
+        for (var i = 0; i < iterations; i++)
         {
             Cycle();
         }
     }
 
-    public void Cycle()
+    public ((int, int)[], (int, int)[]) Cycle()
     {
+        var died = new List<(int, int)>();
+        var born = new List<(int, int)>();
+
         var neighbors = A.NeighborMap
             .With(_mapBuilder)
             .Build();
-            
+
         foreach (var cell in _map.Keys)
         {
             // Should the cell die?
@@ -35,6 +38,7 @@ public class Game
             if (!neighbors.ContainsKey(cell) || neighbors[cell] > 3 || neighbors[cell] < 2)
             {
                 _map.Remove(cell);
+                died.Add(cell);
             }
         }
         // Should a cell be born?
@@ -44,7 +48,10 @@ public class Game
             .Select(cell => cell.Key))
         {
             _map[neighbor] = true;
+            born.Add(neighbor);
         }
+
+        return (born.ToArray(), died.ToArray());
     }
 
     public void Draw()
