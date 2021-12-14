@@ -5,6 +5,8 @@ public class Game
     private readonly Dictionary<(int, int), bool> _map;
     private readonly MapBuilder _mapBuilder;
 
+    public (int, int)[] GetCells() => _map.Keys.ToArray();
+
     public Game(MapBuilder mapBuilder)
     {
         _mapBuilder = mapBuilder;

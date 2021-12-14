@@ -1,9 +1,63 @@
 ﻿@page "/"
 
-<PageTitle>Index</PageTitle>
+@using Blazor.Extensions
+@using Blazor.Extensions.Canvas
+@using Blazor.Extensions.Canvas.Canvas2D
+@using OfLife
+@inject IJSRuntime JsRuntime;
 
-<h1>Hello, world!</h1>
+<div id="canvasHolder" style="position: fixed; width: 100%; height: 100%">
+    <BECanvas Width="600" Height="400" @ref="CanvasRef"></BECanvas>
+</div>
 
-Welcome to your new app.
+@code {
+    private static double _scale = 4.0;
+    private static MapBuilder _mapBuilder = A.Map
+                .WithWidth(400)
+                .WithHeight(200)
+                .WithPentominoR();
+    private static Game _game = new Game(_mapBuilder);
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+    private Canvas2DContext ctx;
+    protected BECanvasComponent CanvasRef;
+    private DateTime LastRender;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        this.ctx = await CanvasRef.CreateCanvas2DAsync();
+        await JsRuntime.InvokeAsync<object>("initRenderJS", DotNetObjectReference.Create(this));
+        await base.OnInitializedAsync();
+    }
+
+    [JSInvokable]
+    public void ResizeInBlazor(double width, double height)
+    {
+        //=> _game.Resize(width, height);
+    }
+
+    [JSInvokable]
+    public async ValueTask RenderInBlazor(float timeStamp)
+    {
+        double fps = 1.0 / (DateTime.Now - LastRender).TotalSeconds;
+        LastRender = DateTime.Now;
+
+        await this.ctx.BeginBatchAsync();
+        await this.ctx.ClearRectAsync(0, 0, _mapBuilder.Width * _scale, _mapBuilder.Height * _scale);
+        await this.ctx.SetFillStyleAsync("#003366");
+        await this.ctx.FillRectAsync(0, 0, _mapBuilder.Width * _scale, _mapBuilder.Height * _scale);
+        await this.ctx.SetFillStyleAsync("#FFFFFF");
+        await this.ctx.SetFontAsync("16px consolas");
+        await this.ctx.FillTextAsync($"FPS: {fps:0.000}", 10, 15);
+        await this.ctx.SetStrokeStyleAsync("#FFFFFF");
+
+        foreach (var cell in _game.GetCells())
+        {
+            await this.ctx.SetFillStyleAsync("#FFFFFF");
+            await this.ctx.FillRectAsync(cell.Item1 * _scale, cell.Item2 * _scale, _scale, _scale);
+        }
+
+        await this.ctx.EndBatchAsync();
+
+        _game.Cycle();
+    }
+}
