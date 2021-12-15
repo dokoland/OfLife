@@ -5,8 +5,8 @@ public class Game
     private readonly Dictionary<(int, int), bool> _map;
     private readonly MapBuilder _mapBuilder;
     private NeighborMap _neighborMap;
-    private List<(int, int)> _died = new List<(int, int)>();
-    private List<(int, int)> _born = new List<(int, int)>();
+    private List<(int, int)> _died = new();
+    private List<(int, int)> _born = new();
 
     public (int, int)[] GetCells() => _map.Keys.ToArray();
 
@@ -28,10 +28,9 @@ public class Game
     public (List<(int, int)>, List<(int, int)>) Cycle()
     {
         _neighborMap.Update(_born, _died);
-        //_neighborMap = A.NeighborMap.With(_mapBuilder).Build();
 
-        _died = new List<(int, int)>();
-        _born = new List<(int, int)>();
+        _died = new();
+        _born = new();
 
         foreach (var cell in _map.Keys)
         {

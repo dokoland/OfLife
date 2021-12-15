@@ -53,10 +53,10 @@
         await _ctx!.BeginBatchAsync();
 
         await _ctx.SetFillStyleAsync("#003366");
-        await _ctx.FillRectAsync(10, 2, 220, 16);
+        await _ctx.FillRectAsync(10, 2, 420, 16);
         await _ctx.SetFillStyleAsync("#FFFFFF");
         await _ctx.SetFontAsync("16px consolas");
-        await _ctx.FillTextAsync($"FPS: {fps:0.0} CYCLE: {_cycleCounter}", 10, 15);
+        await _ctx.FillTextAsync($"FPS: {fps:0.0} CYCLE: {_cycleCounter} BORN: {born.Count} DIED: {died.Count}", 10, 15);
         await _ctx.SetStrokeStyleAsync("#FFFFFF");
 
         await _ctx.SetFillStyleAsync("#003366");
