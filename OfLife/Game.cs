@@ -21,7 +21,7 @@ public class Game
         }
     }
 
-    public ((int, int)[], (int, int)[]) Cycle()
+    public (List<(int, int)>, List<(int, int)>) Cycle()
     {
         var died = new List<(int, int)>();
         var born = new List<(int, int)>();
@@ -43,15 +43,16 @@ public class Game
         }
         // Should a cell be born?
         // exactly 3 neighbors
-        foreach (var neighbor in neighbors
-            .Where(cell => cell.Value == 3)
-            .Select(cell => cell.Key))
+        foreach (var neighbor in neighbors)
         {
-            _map[neighbor] = true;
-            born.Add(neighbor);
+            if (neighbor.Value == 3)
+            {
+                _map[neighbor.Key] = true;
+                born.Add(neighbor.Key);
+            }
         }
 
-        return (born.ToArray(), died.ToArray());
+        return (born, died);
     }
 
     public void Draw()
