@@ -26,30 +26,27 @@ public class Game
         var died = new List<(int, int)>();
         var born = new List<(int, int)>();
 
-        var neighbors = A.NeighborMap
-            .With(_mapBuilder)
-            .Build();
+        var neighbors = A.NeighborMap.With(_mapBuilder).Build();
 
         foreach (var cell in _map.Keys)
         {
             // Should the cell die?
             // More than 3 neighbors?
             // Less than 2 neighbors or no neighbors at all
-            if (!neighbors.ContainsKey(cell) || neighbors[cell] > 3 || neighbors[cell] < 2)
+            var neighborsCount = neighbors.GetNeighbors(cell);
+            if (neighborsCount > 3 || neighborsCount < 2)
             {
                 _map.Remove(cell);
                 died.Add(cell);
             }
         }
+
         // Should a cell be born?
         // exactly 3 neighbors
-        foreach (var neighbor in neighbors)
+        foreach (var neighbor in neighbors.GetCellsWith3Neighbors())
         {
-            if (neighbor.Value == 3)
-            {
-                _map[neighbor.Key] = true;
-                born.Add(neighbor.Key);
-            }
+            _map[neighbor] = true;
+            born.Add(neighbor);
         }
 
         return (born, died);

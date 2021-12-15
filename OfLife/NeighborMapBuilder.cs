@@ -4,15 +4,18 @@ public class NeighborMapBuilder
 {
     private MapBuilder? _mapBuilder;
 
-    public Dictionary<(int, int), int> Build()
+    private NeighborMap? _neighborMap;
+
+    public NeighborMap Build()
     {
-        var map = new Dictionary<(int, int), int>();
+        _neighborMap = new NeighborMap(_mapBuilder!.Width, _mapBuilder.Height);
+
         foreach (var cell in _mapBuilder!.Build().Keys)
         {
-            AddToNeighborCounts(map, cell, 1);
+            _neighborMap.AddToNeighborCounts(cell, 1);
         }
 
-        return map;
+        return _neighborMap;
     }
 
     public NeighborMapBuilder With(MapBuilder mapBuilder)
@@ -20,56 +23,5 @@ public class NeighborMapBuilder
         _mapBuilder = mapBuilder;
 
         return this;
-    }
-
-    private void AddToNeighborCounts(Dictionary<(int, int), int> map, (int, int) cell, int value)
-    {
-        var xLeft = cell.Item1 - 1;
-        var x = cell.Item1;
-        var xRight = cell.Item1 + 1;
-
-        var yTop = cell.Item2 - 1;
-        var y = cell.Item2;
-        var yBottom = cell.Item2 + 1;
-
-        var xMax = _mapBuilder!.Width - 1;
-        var yMax = _mapBuilder.Height - 1;
-
-        if (xLeft < 0)
-        {
-            xLeft = xMax;
-        }
-        if (xRight > xMax)
-        {
-            xRight = 0;
-        }
-        if (yTop < 0)
-        {
-            yTop = yMax;
-        }
-        if (yBottom > yMax)
-        {
-            yBottom = 0;
-        }
-
-        AddToDictionary(map, (xLeft, yTop), value);
-        AddToDictionary(map, (x, yTop), value);
-        AddToDictionary(map, (xRight, yTop), value);
-
-        AddToDictionary(map, (xLeft, y), value);
-        AddToDictionary(map, (xRight, y), value);
-
-        AddToDictionary(map, (xLeft, yBottom), value);
-        AddToDictionary(map, (x, yBottom), value);
-        AddToDictionary(map, (xRight, yBottom), value);
-    }
-
-    private void AddToDictionary(Dictionary<(int, int), int> map, (int, int) key, int value)
-    {
-        if (!map.ContainsKey(key))
-        {
-            map[key] = 0;
-        }
-        map[key] += value;
     }
 }
