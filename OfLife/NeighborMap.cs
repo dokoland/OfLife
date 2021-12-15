@@ -19,8 +19,21 @@ public class NeighborMap
         return _map[cell];
     }
 
-    public (int,int)[] GetCellsWith3Neighbors()
+    public (int, int)[] GetCellsWith3Neighbors()
         => _map.Where(cell => cell.Value == 3).Select(cell => cell.Key).ToArray();
+
+    public void Update(List<(int, int)> born, List<(int, int)> died)
+    {
+        foreach (var cell in born)
+        {
+            AddToNeighborCounts(cell, 1);
+        }
+
+        foreach (var cell in died)
+        {
+            AddToNeighborCounts(cell, -1);
+        }
+    }
 
     public void AddToNeighborCounts((int, int) cell, int value)
     {
@@ -70,7 +83,7 @@ public class NeighborMap
         {
             _map[key] = 0;
         }
+
         _map[key] += value;
     }
-
 }

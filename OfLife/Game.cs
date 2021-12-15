@@ -4,6 +4,9 @@ public class Game
 {
     private readonly Dictionary<(int, int), bool> _map;
     private readonly MapBuilder _mapBuilder;
+    private NeighborMap _neighborMap;
+    private List<(int, int)> _died = new List<(int, int)>();
+    private List<(int, int)> _born = new List<(int, int)>();
 
     public (int, int)[] GetCells() => _map.Keys.ToArray();
 
@@ -11,6 +14,7 @@ public class Game
     {
         _mapBuilder = mapBuilder;
         _map = mapBuilder.Build();
+        _neighborMap = A.NeighborMap.With(_mapBuilder).Build();
     }
 
     public void Cycle(int iterations)
@@ -23,33 +27,40 @@ public class Game
 
     public (List<(int, int)>, List<(int, int)>) Cycle()
     {
-        var died = new List<(int, int)>();
-        var born = new List<(int, int)>();
+        _neighborMap.Update(_born, _died);
+        //_neighborMap = A.NeighborMap.With(_mapBuilder).Build();
 
-        var neighbors = A.NeighborMap.With(_mapBuilder).Build();
+        _died = new List<(int, int)>();
+        _born = new List<(int, int)>();
 
         foreach (var cell in _map.Keys)
         {
             // Should the cell die?
             // More than 3 neighbors?
             // Less than 2 neighbors or no neighbors at all
-            var neighborsCount = neighbors.GetNeighbors(cell);
+            var neighborsCount = _neighborMap.GetNeighbors(cell);
             if (neighborsCount > 3 || neighborsCount < 2)
             {
-                _map.Remove(cell);
-                died.Add(cell);
+                if (_map.ContainsKey(cell))
+                {
+                    _map.Remove(cell);
+                    _died.Add(cell);
+                }
             }
         }
 
         // Should a cell be born?
         // exactly 3 neighbors
-        foreach (var neighbor in neighbors.GetCellsWith3Neighbors())
+        foreach (var neighbor in _neighborMap.GetCellsWith3Neighbors())
         {
-            _map[neighbor] = true;
-            born.Add(neighbor);
+            if (!_map.ContainsKey(neighbor))
+            {
+                _map[neighbor] = true;
+                _born.Add(neighbor);
+            }
         }
 
-        return (born, died);
+        return (_born, _died);
     }
 
     public void Draw()
