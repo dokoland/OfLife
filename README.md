@@ -6,7 +6,7 @@ This project started as a way to explore different implementation strategies, pe
 
 Rather than being a complete Game of Life application, **OfLife** is a playground for trying out ideas.
 
-<img width="1920" height="1152" alt="image" src="https://github.com/user-attachments/assets/bc093179-db83-4f2d-acd9-a16e33503171" />
+<img width="423" height="445" alt="OfLife" src="https://github.com/user-attachments/assets/45a081e4-1462-4654-a07c-e08447782c22" />
 
 ## Goals
 
